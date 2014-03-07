@@ -1,6 +1,7 @@
 'use strict';
 var fs = require('fs');
 var util = require('util');
+var rimraf = require('rimraf');
 
 var lrSnippet = require('connect-livereload')();
 
@@ -131,18 +132,6 @@ module.exports = function (grunt) {
                         'javascripts/DD_belatedPNG_0.0.8a-min.js',
                         'images/**/*.{webp,gif,png,jpg,jpeg}',
                         'components/requirejs/require.js'
-                    ]
-                }]
-            },
-            index : {
-                files : [{
-                    expand : true,
-                    dot : true,
-                    cwd : '<%= paths.dist %>',
-                    dest : 'usb-guide',
-                    src : [
-                        'index.html',
-                        'images/**/*.png'
                     ]
                 }]
             }
@@ -301,6 +290,60 @@ module.exports = function (grunt) {
     });
 
 
+    //递归复制
+    function copyFolderRecursive(source,dist){
+        if(!fs.existsSync(source)){
+            grunt.fail.warn('Cannot finde path: ' + source)
+            return;
+        }
+
+        //如果是目录的化
+        if(fs.statSync(source).isDirectory()){
+            fs.readdirSync(source).forEach(function(file){
+
+                var curPath = source + '/' + file,
+                    distPath = dist + '/' + file;
+                if(fs.statSync(curPath).isDirectory()){
+                    copyFolderRecursive(curPath,distPath);
+                }else{
+                    grunt.file.copy(curPath,distPath);
+                }
+
+            });
+        }else{
+
+            //只是文件的化，直接copy
+            //注意dist如果是目录，会：Unable to write "**" file (Error code: EISDIR)
+            if(fs.statSync(dist).isDirectory()){
+                grunt.file.copy(source,dist+'/'+source);
+            }else{
+                grunt.file.copy(source,dist);
+            }
+            
+        }
+    }
+
+    //用来输出一个i18n的文件夹
+    grunt.registerTask('copyI18n',function(nls){
+        var nlsPath = 'usb-guide/' + nls;
+        console.log(nlsPath);
+
+        //如果存在,删掉它
+        if(fs.existsSync('usb-guide')){
+            rimraf.sync('usb-guide');
+        }
+
+        //创建一个
+        fs.mkdirSync('usb-guide');
+        fs.mkdirSync(nlsPath);
+        fs.mkdirSync(nlsPath + '/images');
+
+        //copy文件：一个index.html、images的文件夹
+        grunt.file.copy(pathConfig.dist+'/index.html',nlsPath+'/index.html');
+        copyFolderRecursive(pathConfig.dist+'/images',nlsPath+'/images');
+
+    })
+
     //for i18n
     //@nls zh-cn,en-us  ...
     grunt.registerTask('build',function(nls){
@@ -326,7 +369,7 @@ module.exports = function (grunt) {
                 'replace:dist',
                 'replacemain',
                 'shell:replace',
-                'copy:index'
+                'copyI18n:'+nls
             ];
 
             grunt.task.run(taskList);

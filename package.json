@@ -8,6 +8,7 @@
     },
     "dependencies" : {},
     "devDependencies" : {
+        "rimraf": "~2.2.1",
         "matchdep" : "0.3.0",
         "grunt" : "0.4.2",
         "grunt-rev" : "0.1.0",
