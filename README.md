@@ -1,4 +1,4 @@
 USB
 ===
 
-this is new USB for great i18n
+this is new USB local for great i18n
