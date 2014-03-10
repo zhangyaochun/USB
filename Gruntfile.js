@@ -145,10 +145,12 @@ module.exports = function (grunt) {
             },
             dist : {
                 options : {
+                    relativeAssets : false,
                     sassDir : '<%= paths.tmp %>/compass/sass',
                     cssDir : '<%= paths.dist %>/stylesheets',
                     generatedImagesDir : '<%= paths.dist %>/images',
-                    outputStyle : 'compressed',
+                    outputStyle : 'expanded',
+                    debugInfo: true,
                     httpGeneratedImagesPath: './images'
                 }
             },
