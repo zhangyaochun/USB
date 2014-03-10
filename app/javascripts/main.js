@@ -60,7 +60,7 @@
                 }
             }
 
-            window.external.call('{"cmd":"log", "param":"' + url + '?' + datas.join('&')  + '"}');
+            window.externalCall('', 'connection-guide', '{"cmd":"log", "param":"' + url + '?' + datas.join('&')  + '"}');
         };
         window.log = log;
 
@@ -181,7 +181,7 @@
         var offLine = function (data) {
             show('offline');
             $('.button-retry-offline').on('click', function () {
-                window.external.call('{"cmd":"show-rsa-on-device", "param":""}');
+                window.externalCall('', 'connection-guide', '{"cmd":"show-rsa-on-device", "param":""}');
                 log({
                     'event' : 'ui.click.retry_debug'
                 });
@@ -242,7 +242,7 @@
         var installDriverCanceled = function (data) {
             show('install_driver_canceled');
             $('.retry-install-driver').one('click', function () {
-                window.external.call('{"cmd":"retry-install-driver", "param":""}');
+                window.externalCall('', 'connection-guide', '{"cmd":"retry-install-driver", "param":""}');
                 log({
                     'event' : 'ui.click.retry-install-driver'
                 });
@@ -252,7 +252,7 @@
         var downloadDriverFailed = function (data) {
             show('download_driver_failed');
             $('.retry-download-driver').one('click', function () {
-                window.external.call('{"cmd":"retry-download-driver", "param":""}');
+                window.externalCall('', 'connection-guide', '{"cmd":"retry-download-driver", "param":""}');
                 log({
                     'event' : 'ui.click.retry-download-driver'
                 });
@@ -264,7 +264,7 @@
             $(".g-tips.h5").html(FormatString(lang.USER_KILL_ADB, data.adb_process_name));
 
             $('.kill-adb').one('click', function () {
-                window.external.call('{"cmd":"kill-adb", "param":""}');
+                window.externalCall('', 'connection-guide', '{"cmd":"kill-adb", "param":""}');
                 log({
                     'event' : 'ui.click.kill-adb'
                 });
@@ -289,7 +289,7 @@
             $(".g-tips.h5").html(FormatString(lang.USER_KILL_ADB_ERROR, data.adb_process_name));
 
             $('.retry-kill-adb').one('click', function () {
-                window.external.call('{"cmd":"retry", "param":""}');
+                window.externalCall('', 'connection-guide', '{"cmd":"retry", "param":""}');
                 log({
                     'event' : 'ui.click.retry-kill-adb'
                 });
@@ -324,24 +324,24 @@
         var uacCanceled = function (data) {
             show('uac_canceled');
             $(".click_uac").one('click', function () {
-                window.external.call('{"cmd":"retry", "param":""}');
+                window.externalCall('', 'connection-guide', '{"cmd":"retry", "param":""}');
             });
         };
 
         var publisherNotTrusted = function (data) {
             show('publisher-not-trusted');
             $(".retry-trust").one('click', function () {
-                window.external.call('{"cmd":"retry", "param":""}');
+                window.externalCall('', 'connection-guide', '{"cmd":"retry", "param":""}');
             });
         };
 
         var driversignVerifyFailed = function (data) {
             show('installing-credit');
             $(".retry-credit").one('click', function () {
-                window.external.call('{"cmd":"retry", "param":""}');
+                window.externalCall('', 'connection-guide', '{"cmd":"retry", "param":""}');
             });
         };
 
-        window.external.call('ready');
+        window.externalCall('', 'connection-guide', 'ready');
     });
 }(this, this.document));
