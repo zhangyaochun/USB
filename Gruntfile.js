@@ -149,8 +149,7 @@ module.exports = function (grunt) {
                     sassDir : '<%= paths.tmp %>/compass/sass',
                     cssDir : '<%= paths.dist %>/stylesheets',
                     generatedImagesDir : '<%= paths.dist %>/images',
-                    outputStyle : 'expanded',
-                    debugInfo: true,
+                    outputStyle : 'compressed',
                     httpGeneratedImagesPath: './images'
                 }
             },
