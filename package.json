@@ -1,7 +1,7 @@
 {
     "name" : "USB",
     "version" : "1.0.1",
-    "description" : "Put your description for this project here.",
+    "description" : "I18n USB.",
     "repository" : {
         "type" : "git",
         "url" : "https://github.com/zhangyaochun/USB.git"

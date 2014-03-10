@@ -78,7 +78,6 @@ module.exports = function (grunt) {
         },
         clean : {
             dist : ['<%= paths.tmp %>', '<%= paths.dist %>'],
-            index : ['usb-guide'],
             server : '<%= paths.tmp %>'
         },
         useminPrepare : {
@@ -328,14 +327,20 @@ module.exports = function (grunt) {
         var nlsPath = 'usb-guide/' + nls;
         console.log(nlsPath);
 
-        //如果存在,删掉它
-        if(fs.existsSync('usb-guide')){
-            rimraf.sync('usb-guide');
+        //如果一级不存在，就创建
+        if(!fs.existsSync('usb-guide')){
+            fs.mkdirSync('usb-guide');
         }
 
-        //创建一个
-        fs.mkdirSync('usb-guide');
+        //如果存在,删掉它
+        if(fs.existsSync('usb-guide') && fs.existsSync(nlsPath)){
+            rimraf.sync(nlsPath);
+        }
+
+        //创建二级
         fs.mkdirSync(nlsPath);
+
+        //创建三级/images
         fs.mkdirSync(nlsPath + '/images');
 
         //copy文件：一个index.html、images的文件夹
