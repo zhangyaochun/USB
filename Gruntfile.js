@@ -231,6 +231,12 @@ module.exports = function (grunt) {
             }
         },
         shell: {
+            buildAdonis : {
+                options : {
+                    stdout : true
+                },
+                command : './buildAdonis.sh'
+            },
             replace : {
                 command : './build.sh'
             }
